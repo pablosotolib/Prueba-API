@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const jsonData = jsonInput.value;
 
         // Realiza una solicitud POST a la API
-        fetch('http://catouml.informatica.uv.cl/api/modelTransformation/CAtoUML', {
+        fetch('https://prueba-mts2.onrender.com/api/modelTransformation/CAtoUML', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
