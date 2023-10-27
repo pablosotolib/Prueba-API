@@ -1,3 +1,5 @@
+
+
 document.addEventListener('DOMContentLoaded', function () {
     const sendButton = document.getElementById('sendButton');
     const jsonInput = document.getElementById('jsonInput');
@@ -6,22 +8,26 @@ document.addEventListener('DOMContentLoaded', function () {
     sendButton.addEventListener('click', function () {
         const jsonData = jsonInput.value;
 
-        // Realiza una solicitud POST a la API
-        fetch('https://prueba-mts2.onrender.com/api/modelTransformation/CAtoUML', {
-            method: 'POST',
+        // Realiza una solicitud POST a la API utilizando Axios
+        axios.post('https://catouml.onrender.com/api/modelTransformation/CAtoUML', jsonData, {
             headers: {
                 'Content-Type': 'application/json'
-            },
-            body: jsonData
+            }
         })
-        .then(response => response.json())
-        .then(data => {
-            // Muestra la respuesta de la API en el elemento "responseOutput"
-            responseOutput.textContent = JSON.stringify(data, null, 2);
+        .then(response => {
+            // Maneja la respuesta exitosa
+            responseOutput.textContent = JSON.stringify(response.data, null, 2);
         })
         .catch(error => {
             console.error('Error:', error);
-            responseOutput.textContent = 'Error al enviar la solicitud a la API.';
+
+            if (error.response) {
+                // Si la respuesta del error tiene datos en formato JSON, puedes acceder a ellos
+                responseOutput.textContent = JSON.stringify(error.response.data, null, 2);
+            } else {
+                // Si no hay datos JSON en la respuesta de error, puedes manejarlo de otra manera
+                responseOutput.textContent = 'Error al enviar la solicitud a la API.';
+            }
         });
     });
 });
